@@ -9,7 +9,7 @@ namespace circleDeteciton
 {
     public partial class Form1 : Form
     {
-        System.Drawing.Image image = System.Drawing.Image.FromFile(@"C:\Users\Ann\Pictures\steamengine.png");
+        System.Drawing.Image image = System.Drawing.Image.FromFile(@"C:\Users\Ann\Pictures\sodacan.jpg");
         public Form1()
         {
             InitializeComponent();
@@ -40,13 +40,13 @@ namespace circleDeteciton
         {
             var canny = new CannyFilter();
             var postCanny = canny.Filter(image);
-            SetImageDisplayed(postCanny);
-            //var result = new Bitmap(image);
-            //var circleDetector = new CircleDetector();
-            //var circles = circleDetector.GetCircles(postCanny);
-            //foreach (var circle in circles)
-            //    result = DevTools.DrawCircle(result, circle, Color.Blue);
 
+            var circleDetector = new CircleDetector();
+            var circles = circleDetector.GetCircles(postCanny);
+            var result = new Bitmap(image);
+            foreach (var circle in circles)
+                result = DevTools.DrawCircle(result, circle, Color.Blue);
+            SetImageDisplayed(result);
         }
 
 

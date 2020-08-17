@@ -1,4 +1,5 @@
 ﻿using circleDeteciton.circellogic;
+using ImageProcessor.Imaging.Colors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,10 +10,10 @@ namespace circleDeteciton
 {
     class CircleDetector
     {
-        int minRadius = 100;
-        int maxRadius = 200;
+        int minRadius = 80;
+        int maxRadius = 120;
         int strongEdgeMinimum = 100;
-        int minValuePrRadiaCircleCenter = 32;
+        int minValuePrRadiaCircleCenter = 20;
         AcumulationGridGetter acumulatorGridGetter = new AcumulationGridGetter();
         public List<Circle> GetCircles(Image image)
         {
@@ -45,7 +46,8 @@ namespace circleDeteciton
         {
             List<Position> circleOutline = GetCircleOutlinePositions(radius, center);
             foreach (Position pos in circleOutline)
-                grid[radius - minRadius, pos.Y, pos.X]++;
+                if (PositionIsWithinRange(pos, grid))
+                    grid[radius - minRadius, pos.Y, pos.X]++;
         }
 
         List<Position> GetCircleOutlinePositions(int radius, Position center)
@@ -62,16 +64,35 @@ namespace circleDeteciton
             return circleEdges;
         }
 
-
-
         List<Circle> GetCirclesFromAcumulatorGrid(int[,,] grid)
         {
-            return null;
+            List<Circle> circles = new List<Circle>();
+            for (int r = minRadius; r <= maxRadius; r++)
+                for (int y = 0; y < grid.GetLength(1); y++)
+                    for (int x = 0; x < grid.GetLength(2); x++)
+                    {
+                        {
+                            Position pos = new Position(x, y);
+                            if (IsCircleCenter(grid, pos, r))
+                                circles.Add(new Circle(r, pos));
+                        }
+                    }
+            return circles;
         }
 
-        bool IsCircleCenter(int value, int circleRadius)
+        bool IsCircleCenter(int[,,] grid, Position position, int radius)
         {
-            return value >= (circleRadius * minValuePrRadiaCircleCenter);
+            int value = grid[radius - minRadius, position.Y, position.X];
+            return (value / radius >= minValuePrRadiaCircleCenter);
         }
+
+
+        bool PositionIsWithinRange(Position pos, int[,,] grid)
+        {
+            return pos.X >= 0 && pos.X < grid.GetLength(2) &&
+                pos.Y >= 0 && pos.Y < grid.GetLength(1);
+        }
+
+
     }
 }
