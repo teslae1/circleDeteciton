@@ -1,6 +1,0 @@
-﻿namespace circleDeteciton
-{
-    class Convolver
-    {
-    }
-}

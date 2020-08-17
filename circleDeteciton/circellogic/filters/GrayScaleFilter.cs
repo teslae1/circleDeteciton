@@ -1,17 +1,16 @@
 ﻿using ImageProcessor;
+using ImageProcessor.Imaging.Filters.Photo;
 using System.Drawing;
-using System.Runtime.InteropServices;
 
-namespace circleDeteciton
+namespace circleDeteciton.circellogic
 {
-    class LibraryGaussianFilter
+    class GrayScaleFilter
     {
         ImageFactory imageFactory = new ImageFactory();
-        int kernelSize = 6;
         public Image Filter(Image image)
         {
             imageFactory.Load(image);
-            imageFactory.GaussianBlur(kernelSize);
+            imageFactory.Filter(MatrixFilters.GreyScale);
             return imageFactory.Image;
         }
     }

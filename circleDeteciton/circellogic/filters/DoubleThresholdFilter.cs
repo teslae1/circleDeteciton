@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using circleDeteciton.circellogic.settings;
+using System.Drawing;
 
 namespace circleDeteciton.circellogic
 {
@@ -7,6 +8,19 @@ namespace circleDeteciton.circellogic
         double highThreshold = 100;
         double lowThreshold = 20;
         EdgeTracker edgeTracker = new EdgeTracker();
+
+        public DoubleThresholdFilter()
+        {
+
+        }
+
+        public DoubleThresholdFilter(Image image, DoubleThresholdFilterSettings settings)
+        {
+            highThreshold = settings.HighThreshold;
+            lowThreshold = settings.LowThreshold;
+            Filter(image);
+        }
+
         public override Image Filter(Image image)
         {
             var bitmap = new Bitmap(image);

@@ -1,29 +1,45 @@
 ﻿using circleDeteciton.circellogic;
+using circleDeteciton.circellogic.settings;
 using ImageProcessor.Imaging.Colors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Security.Policy;
+using System.Xml.Schema;
 
 namespace circleDeteciton
 {
     class CircleDetector
     {
-        int minRadius = 80;
-        int maxRadius = 120;
-        int strongEdgeMinimum = 100;
-        int minValuePrRadiaCircleCenter = 20;
-        AcumulationGridGetter acumulatorGridGetter = new AcumulationGridGetter();
-        public List<Circle> GetCircles(Image image)
+        int minRadius;
+        int maxRadius;
+        int minValuePrRadiaCircleThreshold;
+        DoubleThresholdFilterSettings doubleThresholdFilterSettings = new DoubleThresholdFilterSettings(20, 100);
+        CannyFilter cannyFilter = new CannyFilter();
+        public List<Circle> GetCircles(Image image, CircleDetectionSettings settings)
         {
-            return GetCircles(new Bitmap(image));
+            return GetCircles(new Bitmap(image), settings);
         }
 
-        public List<Circle> GetCircles(Bitmap image)
+        public List<Circle> GetCircles(Bitmap image, CircleDetectionSettings settings)
         {
-            int[,,] grid = GetAccumulatorGrid(image);
+            LoadDetectionSettings(settings);
+            Image postCanny = cannyFilter.Filter(image, doubleThresholdFilterSettings);
+            int[,,] grid = GetAccumulatorGrid(postCanny);
             return GetCirclesFromAcumulatorGrid(grid);
+        }
+
+        void LoadDetectionSettings(CircleDetectionSettings settings)
+        {
+            minRadius = settings.MinRadiusInPixels;
+            maxRadius = settings.MaxRadiusInPixels;
+            minValuePrRadiaCircleThreshold = settings.MinValuePrRadiaCircleThreshold;
+        }
+
+        int[,,] GetAccumulatorGrid(Image image)
+        {
+            return GetAccumulatorGrid(new Bitmap(image));
         }
 
         int[,,] GetAccumulatorGrid(Bitmap image)
@@ -39,7 +55,7 @@ namespace circleDeteciton
 
         bool IsStrongEdge(int x, int y, Bitmap image)
         {
-            return image.GetPixel(x, y).R >= strongEdgeMinimum;
+            return image.GetPixel(x, y).R >= doubleThresholdFilterSettings.HighThreshold;
         }
 
         void AddCircleValueToGrid(ref int[,,] grid, int radius, Position center)
@@ -83,16 +99,13 @@ namespace circleDeteciton
         bool IsCircleCenter(int[,,] grid, Position position, int radius)
         {
             int value = grid[radius - minRadius, position.Y, position.X];
-            return (value / radius >= minValuePrRadiaCircleCenter);
+            return (value / radius >= minValuePrRadiaCircleThreshold);
         }
-
 
         bool PositionIsWithinRange(Position pos, int[,,] grid)
         {
             return pos.X >= 0 && pos.X < grid.GetLength(2) &&
                 pos.Y >= 0 && pos.Y < grid.GetLength(1);
         }
-
-
     }
 }

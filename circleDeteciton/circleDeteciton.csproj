@@ -65,37 +65,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="circellogic\AcumulationGridGetter.cs" />
     <Compile Include="circellogic\Calculators\GradientCalculator.cs" />
     <Compile Include="circellogic\Calculators\PixelOutOfRangeHelper.cs" />
-    <Compile Include="circellogic\CannyFilter.cs" />
-    <Compile Include="circellogic\Circle.cs" />
+    <Compile Include="circellogic\filters\CannyFilter.cs" />
+    <Compile Include="circellogic\models\Circle.cs" />
+    <Compile Include="circellogic\settings\CircleDetectionSettings.cs" />
     <Compile Include="circellogic\CircleDetector.cs" />
     <Compile Include="circellogic\Calculators\DirectionCalculator.cs" />
-    <Compile Include="circellogic\DoubleThresholdFilter.cs" />
-    <Compile Include="circellogic\EdgeTrackFilter.cs" />
-    <Compile Include="circellogic\GaussianFilter.cs" />
-    <Compile Include="circellogic\ImageData.cs" />
-    <Compile Include="circellogic\ImageFilter.cs" />
-    <Compile Include="circellogic\ImageScaleConverter.cs" />
-    <Compile Include="circellogic\ImageConvolutioner.cs" />
-    <Compile Include="circellogic\ImageSobelFilter.cs" />
-    <Compile Include="circellogic\MathHelper.cs" />
-    <Compile Include="circellogic\NonMaxSupressionFilter.cs" />
-    <Compile Include="circellogic\Position.cs" />
-    <Compile Include="Convolver.cs" />
+    <Compile Include="circellogic\filters\DoubleThresholdFilter.cs" />
+    <Compile Include="circellogic\filters\EdgeTrackFilter.cs" />
+    <Compile Include="circellogic\filters\GrayScaleFilter.cs" />
+    <Compile Include="circellogic\filters\ImageFilter.cs" />
+    <Compile Include="circellogic\Calculators\MathHelper.cs" />
+    <Compile Include="circellogic\filters\NonMaxSupressionFilter.cs" />
+    <Compile Include="circellogic\models\Position.cs" />
+    <Compile Include="circellogic\settings\DoubleThresholdFilterSettings.cs" />
     <Compile Include="DevTools.cs" />
-    <Compile Include="EasyTimer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LibraryGaussianFilter.cs" />
+    <Compile Include="circellogic\filters\GaussianFilter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SobelLibraryFilter.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

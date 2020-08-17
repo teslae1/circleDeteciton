@@ -1,4 +1,5 @@
 ﻿using circleDeteciton.circellogic.Calculators;
+using circleDeteciton.circellogic.settings;
 using System.Drawing;
 
 namespace circleDeteciton.circellogic
@@ -9,20 +10,24 @@ namespace circleDeteciton.circellogic
         DoubleThresholdFilter doubleThresholdFilter = new DoubleThresholdFilter();
         Bitmap sobelImage;
         EdgeDirection[,] edgeDirections;
-        ImageGrayScaleFilter grayScaleFilter = new ImageGrayScaleFilter();
-        LibraryGaussianFilter gaussianFilter = new LibraryGaussianFilter();
+        GrayScaleFilter grayScaleFilter = new GrayScaleFilter();
+        GaussianFilter gaussianFilter = new GaussianFilter();
         GradientCalculator gradientCalculator = new GradientCalculator();
         DirectionCalculator directionCalculator = new DirectionCalculator();
+
+        public Image Filter(Image image, DoubleThresholdFilterSettings thresholdFilterSettings)
+        {
+            doubleThresholdFilter = new DoubleThresholdFilter(image, thresholdFilterSettings);
+            return Filter(image);
+        }
+
         public override Image Filter(Image image)
         {
             Bitmap bitmap = new Bitmap(image);
             Image postGrayScale = grayScaleFilter.Filter(bitmap);
             Image postGaussian = gaussianFilter.Filter(postGrayScale);
-            //denne her tager mest tid?
             FillSobelImageAndEdgeDirections(postGaussian);
-            //non-maximum suppresion
             Image postNonMaxSupression = nonMaxSupressionFilter.Filter(sobelImage, edgeDirections);
-            //double threshold suppresion + edge tracking
             Image postEdgeTracking = doubleThresholdFilter.Filter(postNonMaxSupression);
             
             return postEdgeTracking;

@@ -38,14 +38,13 @@ namespace circleDeteciton
 
         private void transformBtn_Click(object sender, System.EventArgs e)
         {
-            var canny = new CannyFilter();
-            var postCanny = canny.Filter(image);
 
             var circleDetector = new CircleDetector();
-            var circles = circleDetector.GetCircles(postCanny);
+            var detectionSettings = new CircleDetectionSettings(90,100,25);
+            var circles = circleDetector.GetCircles(image, detectionSettings);
             var result = new Bitmap(image);
             foreach (var circle in circles)
-                result = DevTools.DrawCircle(result, circle, Color.Blue);
+                DevTools.DrawCircle(ref result, circle, Color.Blue);
             SetImageDisplayed(result);
         }
 

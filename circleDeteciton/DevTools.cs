@@ -43,21 +43,19 @@ namespace circleDeteciton
             return image;
         }
 
-        public static Bitmap DrawCircle(Image image, Circle circle, Color color)
+        public static void DrawCircle(ref Bitmap image, Circle circle, Color color)
         {
             var center = circle.Center;
             var radius = circle.Radius;
-            var result = new Bitmap(image);
             for (double i = 0.0; i < 360; i += 0.1)
             {
                 double angle = i * (Math.PI / 180);
                 int x = (int)(center.X + radius * Math.Cos(angle));
                 int y = (int)(center.Y + radius * Math.Sin(angle));
-                if (x >= 0 && x < result.Width &&
-                    y >= 0 && y < result.Height)
-                    result.SetPixel(x, y, color);
+                if (x >= 0 && x < image.Width &&
+                    y >= 0 && y < image.Height)
+                    image.SetPixel(x, y, color);
             }
-            return result;
         }
 
     }
