@@ -38,7 +38,7 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(1477, 715);
+            this.pictureBox.Size = new System.Drawing.Size(370, 715);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
@@ -47,7 +47,7 @@
             this.transformBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.transformBtn.Location = new System.Drawing.Point(0, 675);
             this.transformBtn.Name = "transformBtn";
-            this.transformBtn.Size = new System.Drawing.Size(1477, 40);
+            this.transformBtn.Size = new System.Drawing.Size(370, 40);
             this.transformBtn.TabIndex = 1;
             this.transformBtn.Text = "transform";
             this.transformBtn.UseVisualStyleBackColor = true;
@@ -57,7 +57,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1477, 715);
+            this.ClientSize = new System.Drawing.Size(370, 715);
             this.Controls.Add(this.transformBtn);
             this.Controls.Add(this.pictureBox);
             this.Name = "Form1";

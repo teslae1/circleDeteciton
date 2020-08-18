@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace circleDeteciton
@@ -58,5 +59,47 @@ namespace circleDeteciton
             }
         }
 
+        public static string GetPrintableGrid(int[,,] grid)
+        {
+
+            List<List<List<int>>> arr = new List<List<List<int>>>()
+            {
+                new List<List<int>>()
+                {
+                    new List<int>()
+                    {
+                        1, 2
+                    },
+                }
+            };
+
+            string s = "List<List<List<int>>> arr = new List<List<List<int>>>() " +
+                "{ ";
+
+            for (int r = 0; r < grid.GetLength(0); r++)
+            {
+                s += "new List<List<int>>() { ";
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    s += "new List<int>() { ";
+                    for (int x = 0; x < grid.GetLength(2); x++)
+                    {
+                        s += grid[r, y, x];
+                        if (x < grid.GetLength(2) - 1)
+                            s += ", ";
+                    }
+                    s += " }";
+                    if (y < grid.GetLength(1) - 1)
+                        s += ", ";
+                }
+                s += " }";
+                if (r < grid.GetLength(0) - 1)
+                    s += ", ";
+            }
+
+            s += " }";
+
+            return s;
+        }
     }
 }

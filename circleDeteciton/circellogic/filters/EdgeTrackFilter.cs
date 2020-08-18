@@ -42,20 +42,20 @@ namespace circleDeteciton.circellogic
 
         bool IsWeakEdge(Position pos, Bitmap image)
         {
-            if (PositionOutOfRange(pos, image))
+            if (PositionIsWithinRange(pos,image))
+            {
+                Color currentPixel = image.GetPixel(pos.X, pos.Y);
+                return currentPixel.R < strongEdgeMinimum && currentPixel.R > weakEdgeMinimum;
+            }
+            else
                 return false;
-            Color currentPixel = image.GetPixel(pos.X, pos.Y);
-            return currentPixel.R < strongEdgeMinimum && currentPixel.R > weakEdgeMinimum;
         }
 
-        bool PositionOutOfRange(Position pos, Bitmap image)
+        bool PositionIsWithinRange(Position pos, Bitmap image)
         {
-            return pixelOutOfRangeCalc.IndexIsOutOfRange(pos.X, pos.Y, image);
+            return pos.X >= 0 && pos.X < image.Width &&
+                pos.Y >= 0 && pos.Y < image.Height;
         }
 
-        Color GetClosestPixel(Position pos, Bitmap image)
-        {
-            return pixelOutOfRangeCalc.GetClosestPixel(pos.X, pos.Y, image);
-        }
     }
 }

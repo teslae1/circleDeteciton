@@ -17,7 +17,7 @@ namespace circleDeteciton.circellogic
 
         public Image Filter(Image image, DoubleThresholdFilterSettings thresholdFilterSettings)
         {
-            doubleThresholdFilter = new DoubleThresholdFilter(image, thresholdFilterSettings);
+            doubleThresholdFilter = new DoubleThresholdFilter(thresholdFilterSettings);
             return Filter(image);
         }
 

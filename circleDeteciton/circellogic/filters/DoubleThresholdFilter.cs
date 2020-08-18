@@ -14,11 +14,10 @@ namespace circleDeteciton.circellogic
 
         }
 
-        public DoubleThresholdFilter(Image image, DoubleThresholdFilterSettings settings)
+        public DoubleThresholdFilter(DoubleThresholdFilterSettings settings)
         {
             highThreshold = settings.HighThreshold;
             lowThreshold = settings.LowThreshold;
-            Filter(image);
         }
 
         public override Image Filter(Image image)
